@@ -16,14 +16,14 @@ def main():
 
     # Create the "download" subparser
     new_parser = subparsers.add_parser("download", help="Download a podcast")
-    new_parser.add_argument("path", help="Path to store the new file")
     new_parser.add_argument("url", help="URL of the mp3 file")
+    new_parser.add_argument("path", help="Path to store the new file")
 
     # Parse and execute
     try:
         args = parser.parse_args()
         if args.command == "download":
-            print(podsync.download(args.path, args.url))
+            print(podsync.download(args.url, args.path))
     except Exception as e:
         print(f"Error: {e} Exiting.")
         exit(1)
