@@ -5,9 +5,8 @@ A tool to synchronize podcast feeds to a local directory.
 ## Installation
 
 ```bash
-poetry use env python3.12
-poetry install
 brew install ffmpeg
+poetry install
 ```
 
 ## Usage

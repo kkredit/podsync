@@ -1,10 +1,12 @@
-from os import remove
+from datetime import datetime
 from urllib.request import urlretrieve
 
 import requests
 from bs4 import BeautifulSoup
-from pydub import AudioSegment
-from pydub.effects import speedup
+from ffmpeg import FFmpeg, Progress
+
+#  from pydub import AudioSegment
+#  from pydub.effects import speedup
 
 __all__ = ["download"]
 
@@ -35,24 +37,28 @@ def download_playerfm(url: str, path: str):
     # Extract metadata
     series_title = _playerfm_series_title_from_html(html) or "Unknown Series"
     episode_title = _playerfm_episode_title_from_html(html) or "Unknown Episode"
+    date_published = _playerfm_episode_published_from_html(html)
     mp3_url = _mp3_url_from_html(html)
     if mp3_url is None:
         raise ValueError("Could not find mp3 URL")
 
     # Download the mp3 file
-    filename = path + "/" + f"{series_title} - {episode_title}.mp3"
-    orig_filename = filename + ".orig"
-    urlretrieve(mp3_url, orig_filename)
+    print("Downloading", series_title, "-", episode_title, "...")
+    filename = path + "/" + f"{date_published}-{series_title} - {episode_title}.mp3"
 
-    # Load the file into PyDub
-    audio = AudioSegment.from_file(orig_filename)
-    audio_fast = speedup(audio, playback_speed=1.5)
+    ffmpeg = FFmpeg().input(mp3_url).output(filename, filter="atempo=1.5").option("y")
 
-    # Save the file
-    audio_fast.export(filename, format="mp3")
+    @ffmpeg.on("progress")
+    def on_progress(progress: Progress):
+        print(progress)
 
-    # Remove the original file
-    remove(orig_filename)
+    @ffmpeg.on("stderr")
+    def on_stderr(stderr: str):
+        print("stderr:", stderr)
+
+    ffmpeg.execute()
+
+    print("Downloaded to", filename, "!")
 
 
 def _playerfm_series_title_from_html(html: BeautifulSoup) -> str | None:
@@ -65,6 +71,13 @@ def _playerfm_episode_title_from_html(html: BeautifulSoup) -> str | None:
 
 def _mp3_url_from_html(html: BeautifulSoup) -> str | None:
     return _meta_content_by_attrs(html, {"name": "twitter:player:stream"})
+
+
+def _playerfm_episode_published_from_html(html: BeautifulSoup) -> str:
+    ts = _meta_content_by_attrs(html, {"property": "og:updated_time"})
+    if ts is None:
+        return datetime.today().strftime("%Y.%m.%d")  # fallback to today
+    return datetime.fromisoformat(ts).strftime("%Y.%m.%d")
 
 
 def _meta_content_by_attrs(html: BeautifulSoup, attrs: dict[str, str]) -> str | None:

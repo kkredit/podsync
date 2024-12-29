@@ -9,12 +9,10 @@ readme = "README.md"
 podsync = "podsync.__main__:main"
 
 [tool.poetry.dependencies]
-# must use Python 3.12 in order to use audioop module, required by pydub!
-python = "~3.12"
+python = "^3.13"
 requests = "^2.32.3"
 beautifulsoup4 = "^4.12.3"
-pydub = "^0.25.1"
-ffmpeg = "^1.4"
+python-ffmpeg = "^2.0.12"
 
 
 [tool.poetry.group.dev.dependencies]
