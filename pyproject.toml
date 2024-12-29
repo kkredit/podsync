@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "podsync"
+version = "0.1.0"
+description = "A tool to synchronize podcast feeds to a local directory"
+authors = ["Kevin Kredit <knkredit60@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.scripts]
+podsync = "podsync.__main__:main"
+
+[tool.poetry.dependencies]
+python = "^3.13"
+
+
+[tool.poetry.group.dev.dependencies]
+pyright = "^1.1.391"
+
+
+[tool.pyright]
+include = ["podsync", "tests"]
+exclude = ["**/__pycache__"]
+ignoreMissingStubs = true
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
