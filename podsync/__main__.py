@@ -23,7 +23,7 @@ def main():
     try:
         args = parser.parse_args()
         if args.command == "download":
-            print(podsync.download(args.url, args.path))
+            podsync.download(args.url, args.path)
     except Exception as e:
         print(f"Error: {e} Exiting.")
         exit(1)
