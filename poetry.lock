@@ -159,6 +159,17 @@ files = [
 all = ["flake8 (>=7.1.1)", "mypy (>=1.11.2)", "pytest (>=8.3.2)", "ruff (>=0.6.2)"]
 
 [[package]]
+name = "mutagen"
+version = "1.47.0"
+description = "read and write audio tags for many formats"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "mutagen-1.47.0-py3-none-any.whl", hash = "sha256:edd96f50c5907a9539d8e5bba7245f62c9f520aef333d13392a79a4f70aca719"},
+    {file = "mutagen-1.47.0.tar.gz", hash = "sha256:719fadef0a978c31b4cf3c956261b3c58b6948b32023078a2117b1de09f0fc99"},
+]
+
+[[package]]
 name = "nodeenv"
 version = "1.9.1"
 description = "Node.js virtual environment builder"
@@ -305,4 +316,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.13"
-content-hash = "63787fd95a38ffc879c960b1c91f845c19ca686f9a2aacb456e666e71e801d4a"
+content-hash = "7084a04d0ade32c65aee0f97af214c77a2952a8946835696bedb06e29e3591de"
