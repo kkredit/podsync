@@ -13,7 +13,7 @@ from podsync.sources.youtube import Youtube
 __all__ = ["download"]
 
 
-def download(url: str, path: str):
+def download(url: str, path: str, verbose: int):
     # Find the source
     sources: List[Source] = [Playerfm(), Youtube(), Direct()]
     source = next((source for source in sources if source.applicable(url)), None)
@@ -31,6 +31,9 @@ def download(url: str, path: str):
 
     # Read metadata
     metadata = source.read(url)
+
+    if verbose:
+        print("Metadata:", metadata)
 
     # Download and transform the file
     full_path = path + "/" + metadata["filename"]

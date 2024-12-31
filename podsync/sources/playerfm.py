@@ -25,7 +25,9 @@ class Playerfm(Source):
         duration_seconds = _episode_duration_seconds_from_html(html)
         mp3_url = _mp3_url_from_html(html)
         if mp3_url is None:
-            raise ValueError("Could not find mp3 URL")
+            with open("playerfm-no-parse-mp3.html", "w") as f:
+                f.write(response.text)
+            raise ValueError("Could not find mp3 URL, see playerfm-no-parse-mp3.html")
 
         # Download the mp3 file
         formatted_date = date_published.strftime("%Y.%m.%d")
