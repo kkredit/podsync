@@ -5,6 +5,7 @@ from ffmpeg import FFmpeg, Progress
 from mutagen.easyid3 import EasyID3
 from tqdm import tqdm
 
+from podsync.config import Config
 from podsync.sources.direct import Direct
 from podsync.sources.playerfm import Playerfm
 from podsync.sources.source import Source
@@ -13,7 +14,7 @@ from podsync.sources.youtube import Youtube
 __all__ = ["download"]
 
 
-def download(url: str, path: str, verbose: int):
+def download(config: Config, url: str):
     # Find the source
     sources: List[Source] = [Playerfm(), Youtube(), Direct()]
     source = next((source for source in sources if source.applicable(url)), None)
@@ -23,20 +24,20 @@ def download(url: str, path: str, verbose: int):
     print(
         "Downloading a podcast from",
         url,
-        "to",
-        path,
         "using",
         source.__class__.__name__,
     )
 
     # Read metadata
     metadata = source.read(url)
+    series_config = config.for_series(metadata.get("series_title"))
 
-    if verbose:
+    if series_config.verbose:
+        print("Series config:", series_config)
         print("Metadata:", metadata)
 
     # Download and transform the file
-    full_path = path + "/" + metadata["filename"]
+    full_path = series_config.download_path + "/" + metadata["filename"]
     _ffmpeg_download(
         url=metadata["url"],
         file=full_path,
