@@ -3,14 +3,14 @@ from datetime import datetime
 from podsync.sources.source import DownloadMetadata, Source
 
 
-class Mp3(Source):
+class Direct(Source):
     def applicable(self, url: str) -> bool:
-        return ".mp3" in url
+        return ".mp3" in url or ".aac" in url
 
     def read(self, url: str) -> DownloadMetadata:
         today = datetime.today()
-        mp3_base_name = url.split("/")[-1]
+        file_base_name = url.split("/")[-1]
         return {
             "url": url,
-            "filename": f"{today.strftime('%Y.%m.%d')}-{mp3_base_name}",
+            "filename": f"{today.strftime('%Y.%m.%d')}-{file_base_name}",
         }

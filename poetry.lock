@@ -233,6 +233,17 @@ pyee = "*"
 typing-extensions = "*"
 
 [[package]]
+name = "pytube2"
+version = "15.0.11"
+description = "Python 3 library for downloading YouTube Videos."
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "pytube2-15.0.11-py3-none-any.whl", hash = "sha256:6ff59ed786d37d97d736b5590ca37d8fa1b12097434e0e18a0ac2b40ece9be9b"},
+    {file = "pytube2-15.0.11.tar.gz", hash = "sha256:a8a2ef64d3e5255c86aec25ba1fbf807ebe4411e1d88d75034eded21d2ac721b"},
+]
+
+[[package]]
 name = "requests"
 version = "2.32.3"
 description = "Python HTTP for Humans."
@@ -316,4 +327,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.13"
-content-hash = "7084a04d0ade32c65aee0f97af214c77a2952a8946835696bedb06e29e3591de"
+content-hash = "958ed1087422ddebfeac2bb001973fe1091a604712cd63c9caec0c5c3ef6bf01"

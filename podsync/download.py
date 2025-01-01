@@ -5,21 +5,29 @@ from ffmpeg import FFmpeg, Progress
 from mutagen.easyid3 import EasyID3
 from tqdm import tqdm
 
-from podsync.sources.mp3 import Mp3
+from podsync.sources.direct import Direct
 from podsync.sources.playerfm import Playerfm
 from podsync.sources.source import Source
+from podsync.sources.youtube import Youtube
 
 __all__ = ["download"]
 
 
 def download(url: str, path: str):
     # Find the source
-    sources: List[Source] = [Playerfm(), Mp3()]
+    sources: List[Source] = [Playerfm(), Youtube(), Direct()]
     source = next((source for source in sources if source.applicable(url)), None)
     if source is None:
         raise ValueError("Unknown podcast type")
 
-    print("Downloading a podcast from", url, "to", path, "using", source.__class__.__name__)
+    print(
+        "Downloading a podcast from",
+        url,
+        "to",
+        path,
+        "using",
+        source.__class__.__name__,
+    )
 
     # Read metadata
     metadata = source.read(url)

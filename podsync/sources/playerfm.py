@@ -36,7 +36,7 @@ class Playerfm(Source):
             "duration_seconds": duration_seconds,
             "episode_title": episode_title,
             "series_title": series_title,
-            "date_published": date_published
+            "date_published": date_published,
         }
 
 
