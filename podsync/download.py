@@ -41,8 +41,9 @@ def download(config: Config, url: str):
     _ffmpeg_download(
         url=metadata["url"],
         file=full_path,
-        speedup=1.4,
+        speedup=series_config.speedup,
         duration_seconds=metadata.get("duration_seconds"),
+        verbose=series_config.verbose,
     )
 
     # Set file ID3 metadata
@@ -55,8 +56,18 @@ def download(config: Config, url: str):
     id3_data.save(full_path)
 
 
-def _ffmpeg_download(url: str, file: str, speedup: float, duration_seconds: int | None):
-    ffmpeg = FFmpeg().input(url).output(file, filter=f"atempo={speedup}").option("y")
+def _ffmpeg_download(
+    url: str, file: str, speedup: float, duration_seconds: int | None, verbose: int
+):
+    ffmpeg = (
+        FFmpeg()
+        .input(url)
+        .output(file, {"filter:a": f"atempo={speedup}"})
+        .option("y")
+        .option("loglevel", "debug" if verbose else "info")
+    )
+    if verbose:
+        print("FFmpeg command:", " ".join(ffmpeg.arguments))
     stderr_lines = []
 
     progress_bar = tqdm(
