@@ -9,6 +9,7 @@ from tqdm import tqdm
 from podsync.config import Config
 from podsync.sources.direct import Direct
 from podsync.sources.playerfm import Playerfm
+from podsync.sources.podbean import Podbean
 from podsync.sources.source import Source
 from podsync.sources.youtube import Youtube
 
@@ -17,7 +18,7 @@ __all__ = ["download"]
 
 def download(config: Config, url: str):
     # Find the source
-    sources: List[Source] = [Playerfm(), Youtube(), Direct()]
+    sources: List[Source] = [Playerfm(), Podbean(), Youtube(), Direct()]
     source = next((source for source in sources if source.applicable(url)), None)
     if source is None:
         raise ValueError("Unknown podcast type")

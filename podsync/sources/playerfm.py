@@ -3,6 +3,7 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 
+from podsync.sources.helpers import meta_content_by_attrs
 from podsync.sources.source import DownloadMetadata, Source
 
 
@@ -43,28 +44,26 @@ class Playerfm(Source):
 
 
 def _series_title_from_html(html: BeautifulSoup) -> str:
-    return (
-        _meta_content_by_attrs(html, {"property": "og:site_name"}) or "Unknown Series"
-    )
+    return meta_content_by_attrs(html, {"property": "og:site_name"}) or "Unknown Series"
 
 
 def _episode_title_from_html(html: BeautifulSoup) -> str:
-    return _meta_content_by_attrs(html, {"property": "og:title"}) or "Unknown Episode"
+    return meta_content_by_attrs(html, {"property": "og:title"}) or "Unknown Episode"
 
 
 def _mp3_url_from_html(html: BeautifulSoup) -> str | None:
-    return _meta_content_by_attrs(html, {"name": "twitter:player:stream"})
+    return meta_content_by_attrs(html, {"name": "twitter:player:stream"})
 
 
 def _episode_published_from_html(html: BeautifulSoup) -> datetime:
-    ts = _meta_content_by_attrs(html, {"property": "og:updated_time"})
+    ts = meta_content_by_attrs(html, {"property": "og:updated_time"})
     if ts is None:
         return datetime.today()
     return datetime.fromisoformat(ts)
 
 
 def _episode_duration_seconds_from_html(html: BeautifulSoup) -> int | None:
-    dur_str = _meta_content_by_attrs(html, {"property": "music:duration"})
+    dur_str = meta_content_by_attrs(html, {"property": "music:duration"})
     if dur_str is None:
         return None
     try:
@@ -73,13 +72,3 @@ def _episode_duration_seconds_from_html(html: BeautifulSoup) -> int | None:
         return minutes * 60 + seconds
     except ValueError:
         return None
-
-
-def _meta_content_by_attrs(html: BeautifulSoup, attrs: dict[str, str]) -> str | None:
-    tag = html.find("meta", attrs=attrs)
-    if tag is None:
-        return None
-    if isinstance(tag, str):
-        return tag
-    content = tag.get("content")
-    return content[0] if isinstance(content, list) else content
