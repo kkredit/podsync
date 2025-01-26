@@ -3,6 +3,7 @@ from typing import List
 
 from ffmpeg import FFmpeg, Progress
 from mutagen.easyid3 import EasyID3
+from pyffmpeg import FFprobe
 from tqdm import tqdm
 
 from podsync.config import Config
@@ -59,6 +60,17 @@ def download(config: Config, url: str):
 def _ffmpeg_download(
     url: str, file: str, speedup: float, duration_seconds: int | None, verbose: int
 ):
+    # capture output to a variable
+    #  ffprobe = FFmpeg().input(url).option("v", "quiet").option("print_format", "json").option("show_format", None)
+    # capture output to a variable
+    #  ffprobe = FFprobe(url)
+    #  if verbose:
+    #  print("FFprobe result:", ffprobe.metadata)
+    #  print("input duration:", duration_seconds)
+    #  exit(0)
+
+    #  duration_seconds = duration_seconds or int(probe["format"]["duration"])
+
     ffmpeg = (
         FFmpeg()
         .input(url)
@@ -76,8 +88,8 @@ def _ffmpeg_download(
 
     @ffmpeg.on("start")
     def on_start(arguments: list[str]):
-        #  print("FFmpeg started with arguments:", arguments)
-        pass
+        if verbose:
+            print("FFmpeg started with arguments:", arguments)
 
     @ffmpeg.on("progress")
     def on_progress(progress: Progress):

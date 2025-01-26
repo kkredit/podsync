@@ -13,4 +13,5 @@ class Direct(Source):
         return {
             "url": url,
             "filename": f"{today.strftime('%Y.%m.%d')}-{file_base_name}",
+            "episode_title": file_base_name,
         }

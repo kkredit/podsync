@@ -448,6 +448,22 @@ typing-extensions = "*"
 dev = ["black", "build", "flake8", "flake8-black", "isort", "jupyter-console", "mkdocs", "mkdocs-include-markdown-plugin", "mkdocstrings[python]", "pytest", "pytest-asyncio", "pytest-trio", "sphinx", "toml", "tox", "trio", "trio", "trio-typing", "twine", "twisted", "validate-pyproject[all]"]
 
 [[package]]
+name = "pyffmpeg"
+version = "2.4.2.20"
+description = "FFmpeg wrapper for python"
+optional = false
+python-versions = "*"
+files = [
+    {file = "pyffmpeg-2.4.2.20-py3-none-macosx_10_9_universal2.whl", hash = "sha256:4273a4ef3e279a94cd5b4259b6aee24f515962013810e68ef173f042fd742173"},
+    {file = "pyffmpeg-2.4.2.20-py3-none-macosx_10_9_x86_64.whl", hash = "sha256:3408092f124375726294d2207d035211d3cf1f741408cb8bd486444c3ec146df"},
+    {file = "pyffmpeg-2.4.2.20-py3-none-macosx_11_0_arm64.whl", hash = "sha256:8d6dd248c82b2f24ef94acf523e549999d39a341e985e29ee15db159387d4ecd"},
+    {file = "pyffmpeg-2.4.2.20-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:44699f44624cfed9d312005b0d36d1bf107418b2493b9a7aa85a61d7504bea09"},
+    {file = "pyffmpeg-2.4.2.20-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:d7e044c5aa54fdaa912b532987e70c02969f8428aee50a82999daed64b71a6e0"},
+    {file = "pyffmpeg-2.4.2.20-py3-none-win32.whl", hash = "sha256:b3d20fb24e94324a084cfa38a2de672a6bad9e410cb452ca7bd5da5002862513"},
+    {file = "pyffmpeg-2.4.2.20-py3-none-win_amd64.whl", hash = "sha256:36548aad655a74045f9900ce5ead236223cb6f727896dbb088d4d787098340e6"},
+]
+
+[[package]]
 name = "pyright"
 version = "1.1.391"
 description = "Command line wrapper for pyright"
@@ -588,4 +604,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.13"
-content-hash = "5e949d0c182cf7fbcf7c842a47314022d77503003501b8b6a9a4886ee187b40b"
+content-hash = "9013c415d1292905abe1a0db3d585b33565e3b78e241ae59b9ba11d8e29b5b0c"
